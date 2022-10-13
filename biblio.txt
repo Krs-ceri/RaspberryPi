@@ -6,3 +6,4 @@ http://wiringpi.com/  c/c++ using serial
 https://pypi.org/project/spidev/      python using serial
 # Enable I2C interface on Raspberry pi, install utilies and test hardware
 https://www.raspberrypi-spy.co.uk/2014/11/enabling-the-i2c-interface-on-the-raspberry-pi/
+https://innovelectronique.fr/2013/03/02/utilisation-du-bus-i2c-sur-raspberrypi/   horloge 
