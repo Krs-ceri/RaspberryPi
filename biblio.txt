@@ -1,2 +1,6 @@
 
 https://rapidjson.org/
+https://learn.sparkfun.com/tutorials/raspberry-pi-spi-and-i2c-tutorial/all
+https://www.framboise314.fr/le-port-serie-du-raspberry-pi-3-pas-simple/#Un_programme_en_Python
+http://wiringpi.com/  c/c++ using serial
+https://pypi.org/project/spidev/      python using serial
