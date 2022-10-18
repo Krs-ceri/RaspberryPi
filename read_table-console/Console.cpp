@@ -14,6 +14,7 @@ namespace Manage
        {
                 int choix = 1;
                  //ajouter appel boost choix = 1
+                 //quand le retour est ok, on parse et affiche le fichier retourne datas.json
                 read_datas_convert_to_object("datas.json");
        }
 
@@ -28,6 +29,7 @@ namespace Manage
                     cin>>id;
              }while(this->utils->validate_id(id) != 0);
             //ajouter appel boost choix = 2, id = ?
+            //quand le retour est ok, on parse et affiche le fichier retourne datas.json
             read_datas_convert_to_object("datas.json");
         }
 
@@ -42,6 +44,7 @@ namespace Manage
                     getline(cin, capteur_id);
              }while(this->utils->validate_string(capteur_id) != 0);
              //ajouter appel boost choix = 3, capteur_id = ""
+             //quand le retour est ok, on parse et affiche le fichier retourne datas.json
             read_datas_convert_to_object("datas.json");
 
         }
@@ -72,6 +75,7 @@ namespace Manage
                     cin>>year;
              }while(this->utils->validate_year(year) != 0);
             //ajouter appel boost choix = 4, day = ? month = ? year = ?
+            //quand le retour est ok, on parse et affiche le fichier retourne datas.json
             read_datas_convert_to_object("datas.json");
        }
 
@@ -94,6 +98,7 @@ namespace Manage
                     cin>>minute;
              }while(this->utils->validate_minute(minute) != 0);
              //ajouter appel boost choix = 5, hour = ? minute = ?
+             //quand le retour est ok, on parse et affiche le fichier retourne datas.json
              read_datas_convert_to_object("datas.json");
        }
 
