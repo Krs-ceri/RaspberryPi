@@ -173,7 +173,7 @@ namespace Manage
                    return datasCapteur;
            }
 
-           datasCapteur->set_id(0);
+           datasCapteur->set_id(resource["capteur"]["id"].as<int>(0));
            datasCapteur->set_identite_capt(id_capteur);
            datasCapteur->set_temperature(resource["capteur"]["temperature"].as<double>(0));
            datasCapteur->set_humidity(resource["capteur"]["humidity"].as<double>(0));
