@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./insert_db /home/mrzk/datas/datas.json /usr/local/db/db_temperature.db
+./insert_db /home/ubuntu/datas/datas.json /usr/local/db/db_temperature.db
