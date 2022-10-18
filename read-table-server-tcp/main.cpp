@@ -7,7 +7,7 @@ using namespace Manage;
 *Cette partie répondera aux requetes reçues par boost.
 *
 */
-int main(int argc, char **argv)
+void traitement_chargement_donnees(int argc, char **argv)
 {
 
 	int choix = atoi(argv[1]);
@@ -36,5 +36,12 @@ int main(int argc, char **argv)
 	std::vector < std::string > json_string_vect =
 			factory->convert_object_to_json_string(vect_datas);
 	factory->create_json_file(json_string_vect, "datas.json");
-	return 0;
+	delete factory;
+	factory = nullptr;
+}
+
+int main(int argc, char **argv)
+{
+      traitement_chargement_donnees(argc, argv);
+      return 0;
 }
