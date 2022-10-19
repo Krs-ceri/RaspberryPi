@@ -106,7 +106,7 @@ namespace Manage
                        return json_string;
                for (std::string str : json_string_vect)
               {
-                       json_string += str + "\n";
+                       json_string += str + "#";
                }
                return json_string;
        }

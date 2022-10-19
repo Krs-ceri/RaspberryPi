@@ -37,6 +37,12 @@ int main(int argc, char ** argv)
 {
 
        int port =  atoi(argv[1]);
+       if(port == 0)
+       {
+              cout << "Le numero de port n'est pas renseigne, connexion impossible : " << port << endl;
+              return 1;
+       }
+       if(port < 0) port *=-1;
        boost::asio::io_service io_service;
        Factory *factory = new Factory();
 
