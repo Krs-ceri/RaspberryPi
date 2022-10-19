@@ -31,7 +31,6 @@ namespace Manage
                      vector<DatasCapteur *> load_data_by_date(int day, int month, int year);
                      vector<DatasCapteur *> load_data_by_hour(int minute, int hour);
                      vector<std::string> convert_object_to_json_string(vector<DatasCapteur *> vect_datas);
-                     void create_json_file(std::vector <std::string> json_string_vect, std::string file_name);
        };
 }
 #endif // FACTORY_H_FILE

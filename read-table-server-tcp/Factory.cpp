@@ -71,17 +71,4 @@ namespace Manage
               }
               return json_string_vect;
        }
-
-       void Factory::create_json_file(std::vector <std::string> json_string_vect, std::string file_name)
-       {
-               std::ofstream file;
-               file.open (file_name);
-               if(json_string_vect.size() == 0)
-                      file.close();
-               for(std::string str : json_string_vect)
-               {
-                      file << str + "\n";
-               }
-               file.close();
-       }
 }
