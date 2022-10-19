@@ -12,16 +12,17 @@ namespace Manage
 
        void Console::load_all_datas()
        {
-                int choix = 1;
+
                  //ajouter appel boost choix = 1
                  //quand le retour est ok, on parse et affiche le fichier retourne datas.json
-                read_datas_convert_to_object("datas.json");
+              string datas =  this->boostTools->load_datas(this->port, this->ip_address, "{datas:{choix:1}}\n" );
+              cout << datas << endl;
        }
 
         void Console::load_data_by_id()
         {
              int id;
-             int choix = 2;
+
              do
              {
                     cout << "Veuillez saisir un Id positif : ";
@@ -30,13 +31,15 @@ namespace Manage
              }while(this->utils->validate_id(id) != 0);
             //ajouter appel boost choix = 2, id = ?
             //quand le retour est ok, on parse et affiche le fichier retourne datas.json
-            read_datas_convert_to_object("datas.json");
+             string datas =  this->boostTools->load_datas(this->port, this->ip_address, "{datas:{choix:2, id:"+to_string(id)+"}}\n" );
+             cout << datas << endl;
+
         }
 
         void Console::load_data_by_capteur_name()
         {
              string capteur_id;
-             int choix = 3;
+
              do
              {
                     cout << "Veuillez saisir le nom du capteur : ";
@@ -45,7 +48,8 @@ namespace Manage
              }while(this->utils->validate_string(capteur_id) != 0);
              //ajouter appel boost choix = 3, capteur_id = ""
              //quand le retour est ok, on parse et affiche le fichier retourne datas.json
-            read_datas_convert_to_object("datas.json");
+             string datas =  this->boostTools->load_datas(this->port, this->ip_address, "{datas:{choix:3, sensor_id:\""+capteur_id+"\"}}\n" );
+             cout << datas << endl;
 
         }
 
@@ -54,7 +58,7 @@ namespace Manage
               int day;
               int month;
               int year;
-              int choix = 4;
+
              do
              {
                     cout << "Veuillez saisir la valeur du jour valide : ";
@@ -76,14 +80,15 @@ namespace Manage
              }while(this->utils->validate_year(year) != 0);
             //ajouter appel boost choix = 4, day = ? month = ? year = ?
             //quand le retour est ok, on parse et affiche le fichier retourne datas.json
-            read_datas_convert_to_object("datas.json");
+           string datas =  this->boostTools->load_datas(this->port, this->ip_address,"{datas:{choix:4, day:"+to_string(day)+", month:"+to_string(month)+", year:"+to_string(year)+"}}\n" );
+             cout << datas << endl;
        }
 
        void Console::load_data_by_hour()
        {
               int hour;
               int minute;
-              int choix = 5;
+
              do
              {
                     cout << "Veuillez saisir la valeur de l'heure valide : ";
@@ -99,7 +104,8 @@ namespace Manage
              }while(this->utils->validate_minute(minute) != 0);
              //ajouter appel boost choix = 5, hour = ? minute = ?
              //quand le retour est ok, on parse et affiche le fichier retourne datas.json
-             read_datas_convert_to_object("datas.json");
+             string datas =  this->boostTools->load_datas(this->port, this->ip_address,"{datas:{choix:5, minute:"+to_string(minute) +", hour:"+to_string(hour)+"}}\n" );
+             cout << datas << endl;
        }
 
 }

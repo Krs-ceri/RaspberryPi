@@ -18,10 +18,10 @@ namespace Manage
               private:
                      Console * console;
              public:
-                     Menu(){ console = new Console();}
+                     Menu(int port, string ip_address){ console = new Console(port, ip_address);}
                      ~Menu(){delete console; console = nullptr;}
                      int check_input_value(int limit_inf, int limit_max);
-                     void launch_programm_manage_temperature();
+                     void launch_programm_manage_temperature( );
 
        };
 }

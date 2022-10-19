@@ -1,10 +1,12 @@
 #include "Menu.hpp"
 
 using namespace Manage;
-//Cette partie affichera les donnees retournees par le server TCP par l'appel Boost asio 
+
 int main(int argc, char ** argv)
 {
-       Menu * menu = new Menu();
+       int port = atoi(argv[1]);
+	string ip_address = argv[2]; //"51.68.86.120";
+       Menu * menu = new Menu(port, ip_address);
        menu->launch_programm_manage_temperature();
        return 0;
 }

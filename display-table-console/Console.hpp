@@ -5,6 +5,7 @@
 #include "Display.hpp"
 #include "Utils.hpp"
 #include "Constantes.hpp"
+#include "BoostTools.hpp"
 
 #include <vector>
 
@@ -19,10 +20,13 @@ namespace Manage
                      Display * display;
                      Utils * utils;
                      Constantes * constantes;
+                     int port;
+                     string ip_address;
+                     BoostTools *boostTools;
 
               public:
-                     Console(){ display = new Display(); utils = new Utils(); constantes = new Constantes();}
-                     ~Console(){ delete display; display = nullptr; delete utils; utils = nullptr;}
+                     Console(int port, string ip_address):port(port), ip_address(ip_address){ display = new Display(); utils = new Utils(); constantes = new Constantes(); boostTools = new BoostTools();}
+                     ~Console(){ delete display; display = nullptr; delete utils; utils = nullptr; delete boostTools; boostTools = nullptr;}
                      void load_all_datas();
                      void load_data_by_id();
                      void load_data_by_capteur_name();

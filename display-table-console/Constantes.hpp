@@ -18,6 +18,7 @@ namespace Manage
                      string sql_by_cpt_id = "SELECT * FROM temp_datas where identite_capt = '";
                      string sql_by_day = "SELECT * FROM temp_datas where jour = ";
                      string sql_by_hour = "SELECT * FROM temp_datas where heure = ";
+                     string ip_address = "51.68.86.120";
               public:
                      Constantes(){}
                      ~Constantes(){}
@@ -45,6 +46,11 @@ namespace Manage
                      {
                             return this->sql_by_hour;
                      }
+                     string get_ip_address()
+                     {
+                            return this->ip_address;
+                     }
+
               };
 }
 
