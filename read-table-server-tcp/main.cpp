@@ -71,11 +71,11 @@ std::string traitement_chargement_donnees(int choix, int id,
 	return json_string;
 }
 
-std::string parser_intput_string(std::string msg_request)
+std::string parser_message_request(std::string msg_request, char delimiter)
 {
 	stringstream inputString(msg_request);
 	string choix_str;
-	getline(inputString, choix_str, '#');
+	getline(inputString, choix_str, delimiter);
 	int choix = stoi(choix_str);
 	std::string json_response = "";
 
@@ -83,12 +83,12 @@ std::string parser_intput_string(std::string msg_request)
 		json_response = traitement_chargement_donnees(1, 0, "", 0, 0, 0, 0, 0);
 	} else if (choix == 2) {
 		string id_str;
-		getline(inputString, id_str, '#');
+		getline(inputString, id_str, delimiter);
 		int id = stoi(id_str);
 		json_response = traitement_chargement_donnees(2, id, "", 0, 0, 0, 0, 0);
 	} else if (choix == 3) {
 		string capteur_ident;
-		getline(inputString, capteur_ident, '#');
+		getline(inputString, capteur_ident, delimiter);
 		json_response = traitement_chargement_donnees(3, 0, capteur_ident, 0, 0,
 				0, 0, 0);
 	} else if (choix == 4) {
@@ -96,24 +96,24 @@ std::string parser_intput_string(std::string msg_request)
 		string month_str;
 		string year_str;
 
-		getline(inputString, day_str, '#');
+		getline(inputString, day_str, delimiter);
 		int day = stoi(day_str);
 
-		getline(inputString, month_str, '#');
+		getline(inputString, month_str, delimiter);
 		int month = stoi(month_str);
 
-		getline(inputString, year_str, '#');
+		getline(inputString, year_str, delimiter);
 		int year = stoi(year_str);
 
 		json_response = traitement_chargement_donnees(2, 0, "", 0, 0, day,
 				month, year);
 	} else if (choix == 5) {
 		string minute_str;
-		getline(inputString, minute_str, '#');
+		getline(inputString, minute_str, delimiter);
 		int minute = stoi(minute_str);
 
 		string hour_str;
-		getline(inputString, hour_str, '#');
+		getline(inputString, hour_str, delimiter);
 		int hour = stoi(hour_str);
 
 		json_response = traitement_chargement_donnees(2, 0, "", minute, hour, 0,
@@ -135,7 +135,7 @@ int main()
 
 		string message_request = read_(socket_);
 
-		string message_response = parser_intput_string(message_request);
+		string message_response = parser_message_request(message_request, ":");
 
 		cout << "message_response : " << endl << message_response << endl;
 
