@@ -1,3 +1,7 @@
 #!/bin/sh
 
-./read_db /usr/local/db/db_temperature.db
+g++ -L /usr/lib/ -L/usr/include  -o "read_db" *.cpp  -lboost_system -lboost_thread -lpthread -lsqlite3
+
+./read_db 
+
+exit 0
