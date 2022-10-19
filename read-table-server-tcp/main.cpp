@@ -71,63 +71,51 @@ std::string traitement_chargement_donnees(int choix, int id,
 	return json_string;
 }
 
-std::string parser_message_request(std::string msg_request, char delimiter)
+std::string parser_intput_string(std::string msg_request, char delimiter)
 {
 	stringstream inputString(msg_request);
 	string choix_str;
-	getline(inputString, choix_str, delimiter);
-	int choix = stoi(choix_str);
-	std::string json_response = "";
+	RSJresource  resource (str); // RSJ parser (delayed parser)
+	int choix = resource["datas"]["choix"].as<int>(0);
 
 	if (choix == 1) {
+
 		json_response = traitement_chargement_donnees(1, 0, "", 0, 0, 0, 0, 0);
 	} else if (choix == 2) {
-		string id_str;
-		getline(inputString, id_str, delimiter);
-		int id = stoi(id_str);
+              int id = resource["datas"]["id"].as<int>(0);
 		json_response = traitement_chargement_donnees(2, id, "", 0, 0, 0, 0, 0);
 	} else if (choix == 3) {
-		string capteur_ident;
-		getline(inputString, capteur_ident, delimiter);
-		json_response = traitement_chargement_donnees(3, 0, capteur_ident, 0, 0,
+		string id_capteur = resource["capteur"]["sensor_id"].as<std::string>("");
+		json_response = traitement_chargement_donnees(3, 0, id_capteur, 0, 0,
 				0, 0, 0);
 	} else if (choix == 4) {
-		string day_str;
-		string month_str;
-		string year_str;
 
-		getline(inputString, day_str, delimiter);
-		int day = stoi(day_str);
-
-		getline(inputString, month_str, delimiter);
-		int month = stoi(month_str);
-
-		getline(inputString, year_str, delimiter);
-		int year = stoi(year_str);
+		int day = resource["datas"]["day"].as<int>(0);
+		int month = resource["datas"]["month"].as<int>(0);
+		int year = resource["datas"]["year"].as<int>(0);
 
 		json_response = traitement_chargement_donnees(2, 0, "", 0, 0, day,
 				month, year);
 	} else if (choix == 5) {
-		string minute_str;
-		getline(inputString, minute_str, delimiter);
-		int minute = stoi(minute_str);
-
-		string hour_str;
-		getline(inputString, hour_str, delimiter);
-		int hour = stoi(hour_str);
-
+		int minute = resource["datas"]["minute"].as<int>(0);
+		int hour   = resource["datas"]["hour"].as<int>(0);
 		json_response = traitement_chargement_donnees(2, 0, "", minute, hour, 0,
 				0, 0);
 	}
 	return json_response;
 }
 
-int main()
+int main(int argc, char ** argv)
 {
+
+       int port =  atoi(argv[1]);
+       cout << "Port : " << port << endl;
+       boost::asio::io_service io_service;
+
 	boost::asio::io_service io_service;
 	while (1)
        {
-		tcp::acceptor acceptor_(io_service, tcp::endpoint(tcp::v4(), 2504));
+		tcp::acceptor acceptor_(io_service, tcp::endpoint(tcp::v4(), port));
 
 		tcp::socket socket_(io_service);
 

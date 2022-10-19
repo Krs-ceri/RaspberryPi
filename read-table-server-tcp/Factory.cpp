@@ -69,6 +69,7 @@ namespace Manage
                      json_str +=" accel_z: " + to_string(data->get_temperature())+ "}}";
                      json_string_vect.push_back(json_str);
               }
+              return json_string_vect;
        }
 
        void Factory::create_json_file(std::vector <std::string> json_string_vect, std::string file_name)
