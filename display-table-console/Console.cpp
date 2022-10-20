@@ -76,9 +76,8 @@ namespace Manage
 
        void Console::load_data_by_hour()
        {
-              int hour;
-              int minute;
-
+             int hour;
+             int minute;
              do
              {
                     cout << "Veuillez saisir la valeur de l'heure valide : ";
@@ -109,18 +108,19 @@ namespace Manage
               return datas;
        }
 
-       vector<string> Console::split (string s, string delimiter) {
+       vector<string> Console::split (string to_splited, string delimiter)
+       {
            size_t pos_start = 0, pos_end, delim_len = delimiter.length();
            string token;
            vector<string> res;
 
-           while ((pos_end = s.find (delimiter, pos_start)) != string::npos) {
-               token = s.substr (pos_start, pos_end - pos_start);
+           while ((pos_end = to_splited.find (delimiter, pos_start)) != string::npos) {
+               token = to_splited.substr (pos_start, pos_end - pos_start);
                pos_start = pos_end + delim_len;
                res.push_back (token);
            }
 
-           res.push_back (s.substr (pos_start));
+           res.push_back (to_splited.substr (pos_start));
            return res;
        }
 
