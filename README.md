@@ -1,7 +1,7 @@
 # RaspberryPi
 This is our first Raspberry pi project, including sensors and master-slave rasp. Also, collecting data over a web-server.
 
-##TCP Server
+## TCP Server
 
 file_client.cpp : send log.json when receiving in data, then delete it (change dir : line 41/85/104)
 
