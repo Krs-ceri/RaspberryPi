@@ -20,7 +20,6 @@ namespace Manage
         void Console::load_data_by_id()
         {
              int id;
-
              do
              {
                     cout << "Veuillez saisir un Id positif : ";
@@ -41,7 +40,7 @@ namespace Manage
                     cin.ignore();
                     getline(cin, capteur_id);
              }while(this->utils->validate_string(capteur_id) != 0);
-             string datas =  this->boostTools->load_datas(this->port, this->ip_address, "{datas:{choix:3, sensor_id:\""+capteur_id+"\"}}\n" );
+             string datas = this->boostTools->load_datas(this->port, this->ip_address, "{datas:{choix:3, sensor_id:\""+capteur_id+"\"}}\n");
              this->display->print_list_data(convert_list_json_object(split(datas, "#")));
         }
 
@@ -70,7 +69,7 @@ namespace Manage
                     cin.clear();
                     cin>>year;
              }while(this->utils->validate_year(year) != 0);
-             string datas =  this->boostTools->load_datas(this->port, this->ip_address,"{datas:{choix:4, day:"+to_string(day)+", month:"+to_string(month)+", year:"+to_string(year)+"}}\n" );
+             string datas =  this->boostTools->load_datas(this->port, this->ip_address,"{datas:{choix:4, day:"+to_string(day)+", month:"+to_string(month)+", year:"+to_string(year)+"}}\n");
              this->display->print_list_data(convert_list_json_object(split(datas, "#")));
        }
 
@@ -91,7 +90,7 @@ namespace Manage
                     cin.clear();
                     cin>>minute;
              }while(this->utils->validate_minute(minute) != 0);
-             string datas =  this->boostTools->load_datas(this->port, this->ip_address,"{datas:{choix:5, minute:"+to_string(minute) +", hour:"+to_string(hour)+"}}\n" );
+             string datas =  this->boostTools->load_datas(this->port, this->ip_address,"{datas:{choix:5, minute:"+to_string(minute) +", hour:"+to_string(hour)+"}}\n");
              this->display->print_list_data(convert_list_json_object(split(datas, "#")));
        }
 
@@ -113,15 +112,13 @@ namespace Manage
            size_t pos_start = 0, pos_end, delim_len = delimiter.length();
            string token;
            vector<string> res;
-
-           while ((pos_end = to_splited.find (delimiter, pos_start)) != string::npos) {
+           while ((pos_end = to_splited.find (delimiter, pos_start)) != string::npos)
+           {
                token = to_splited.substr (pos_start, pos_end - pos_start);
                pos_start = pos_end + delim_len;
                res.push_back (token);
            }
-
            res.push_back (to_splited.substr (pos_start));
            return res;
        }
-
 }
