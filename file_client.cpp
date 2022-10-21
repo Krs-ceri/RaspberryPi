@@ -35,7 +35,17 @@ class Client_socket{
             
 
         }
-
+        bool FileExist(){
+            file.open(".//Data//Client//log.json", ios::in | ios::binary);
+            if(file.is_open()){
+                file.close();
+                return true;
+            }
+            else{
+                file.close();
+                return false;
+            }
+        }
         void create_socket(){
             if ((general_socket_descriptor = socket(AF_INET, SOCK_STREAM, 0)) < 0) { 
                 perror("[ERROR] : Socket failed.\n");
@@ -67,13 +77,38 @@ class Client_socket{
             
                 file<<buffer;
                 cout<<"[LOG] : File Saved.\n";
+                file.close();
+            }
+            else{
+             //   cout<<"[ERROR] : Empty file\n";
             }
 
+        }
+        void transmit_file(){
+            file.open(".//Data//Client//log.json", ios::in | ios::binary);
+            std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
+
+            cout<<"[LOG] : Sending...\n";
+
+            int bytes_sent = send(general_socket_descriptor , contents.c_str() , contents.length() , 0 );
+            cout<<"[LOG] : Transmitted Data Size "<<bytes_sent<<" Bytes.\n";
+
+            cout<<"[LOG] : File Transfer Complete.\n";
+            file.close();
         }
 };
 
 int main(){
     Client_socket C;
-    while(true)    C.receive_file();
+    while(true){
+        if(C.FileExist()){
+            C.transmit_file();
+            if( remove( ".//Data//Client//log.json" ) != 0 )
+                perror( "[ERROR] : Error deleting file" );
+            else
+                puts( "[LOG] : File successfully deleted" );
+        }
+    }
     return 0;
 }

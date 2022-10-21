@@ -19,6 +19,7 @@ class Server_socket{
 
     struct sockaddr_in address;
     int address_length;
+    
 
     public:
         Server_socket(){
@@ -93,18 +94,31 @@ class Server_socket{
             cout<<"[LOG] : File Transfer Complete.\n";
             file.close();
         }
+        void receive_file(){
+            char buffer[1024] = {};
+            int valread = read(new_socket_descriptor , buffer, 1024);
+            if(valread > 0){
+                file.open(".//Data//Server//log.json", ios::out | ios::trunc | ios::binary);
+                if(file.is_open())cout<<"[LOG] : File Created.\n";
+                else{
+                    cout<<"[ERROR] : File creation failed\n";
+                }
+                cout<<"[LOG] : Data received "<<valread<<" bytes\n";
+                cout<<"[LOG] : Saving data to file.\n";
+            
+                file<<buffer;
+                cout<<"[LOG] : File Saved.\n";
+                file.close();
+            }
+            else{
+             //   cout<<"[ERROR] : Empty file\n";
+            }
+
+        }
 };
 
 int main(){
     Server_socket S;
-    while(true){
-        if(S.FileExist()){
-            S.transmit_file();
-            if( remove( ".//Data//Server//log.json" ) != 0 )
-                perror( "[ERROR] : Error deleting file" );
-            else
-                puts( "[LOG] : File successfully deleted" );
-        }
-    }
+    while(true)    S.receive_file();
     return 0;
 }
