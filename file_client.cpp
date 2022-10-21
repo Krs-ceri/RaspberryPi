@@ -7,6 +7,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+
+#include <wiringPi.h>
+
 using namespace std;
 
 class Client_socket{
@@ -62,6 +65,20 @@ class Client_socket{
             cout<<"[LOG] : Connection Successfull.\n";
         }
 
+        void blink_led() {
+            wiringPiSetupGpio();
+
+            pinMode(13, OUTPUT);
+
+            digitalWrite(13, HIGH);
+            delay(15);
+            digitalWrite(13, LOW);
+            delay(15);
+            digitalWrite(13, HIGH);
+            delay(15);
+            digitalWrite(13, LOW);
+            delay(15);
+        }
         void receive_file(){
             char buffer[1024] = {};
             int valread = read(general_socket_descriptor , buffer, 1024);
@@ -91,6 +108,7 @@ class Client_socket{
 
             cout<<"[LOG] : Sending...\n";
 
+            blink_led();
             int bytes_sent = send(general_socket_descriptor , contents.c_str() , contents.length() , 0 );
             cout<<"[LOG] : Transmitted Data Size "<<bytes_sent<<" Bytes.\n";
 
