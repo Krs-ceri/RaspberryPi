@@ -4,32 +4,29 @@ import serial
 import sys
 import time
 
+# Serial communication parameters between Master and Balise (same on both sides)
 ser = serial.Serial(
         port='/dev/ttyS0', #Replace ttyS0 with ttyAM0 for Pi1,Pi2,Pi0
-        baudrate = 100,
+        baudrate = 9600,
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
-        timeout=1
+        timeout=None
 )
 
-INTERVAL_SEND_TO_MASTER = 10
-#word = input(b'Hello maitre')
-#word = b'Hello world'
-#while 1:
-    # Opening log files to read them
+# Interval to send data to Master
+INTERVAL_BALISE = 10
+
+# Open sensors log files in read mode
 log_file = open("/home/pi/sensors-scripts/log_bme280.txt", "r")
 log_file1 = open("/home/pi/sensors-scripts/log_gyro.txt", "r")
 
-    # Reading log files
+# Reading log files
 data = log_file.read()
 data = data + log_file1.read()
 
-    # Encoding unicode string to byte strings
+# Encoding unicode string to byte strings
 data = data.encode('utf-8')
-    #ser.write(b'Hello world')
 
-    # Sending data to Master through Serial connection
+# Sending data to Master through Serial connection
 ser.write(data)
-    #time.sleep(1)
-    #time.sleep(INTERVAL_SEND_TO_MASTER)
