@@ -1,0 +1,16 @@
+{
+	capteur:{
+		str_date: '23/10/2022 23:01:22',
+		sensor_id: 'BME280',
+		temperature: 24.894,
+		humidity: 87.377,
+		pressure: 689.989,
+		gyro_x: -0.015,
+		gyro_y: -0.008,
+		gyro_z: 0.000,
+		accel_x: -0.000,
+		accel_y: -0.000,
+		accel_z: 0.004
+	}
+}
+
