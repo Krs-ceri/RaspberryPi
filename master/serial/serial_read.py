@@ -59,6 +59,7 @@ while 1:
         led_on(yellow)
 
         # Reading serial text received from Balise Rpi
+        x=""
         x=ser.readline()
 
 
@@ -90,5 +91,5 @@ while 1:
         # Closing log file
         log_file.close()
         if x=="\n":
-            print("hello")
-            time.sleep(30)
+            led_on(yellow)
+            time.sleep(35)
