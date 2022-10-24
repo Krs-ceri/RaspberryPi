@@ -19,11 +19,12 @@ class Server_socket{
 
     struct sockaddr_in address;
     int address_length;
+    
 
     public:
         Server_socket(){
             create_socket();
-            PORT = 8051;
+            PORT = 8050;
 
             address.sin_family = AF_INET; 
             address.sin_addr.s_addr = INADDR_ANY; 
@@ -34,13 +35,17 @@ class Server_socket{
             set_listen_set();
             accept_connection();
 
-            file.open(".//Data//Client//client_text.txt", ios::out | ios::trunc | ios::binary);
+
+        }
+        bool FileExist(){
+            file.open("datas/log.json", ios::in | ios::binary);
             if(file.is_open()){
-                cout<<"[LOG] : File is ready to Transmit.\n";
+                file.close();
+                return true;
             }
             else{
-                cout<<"[ERROR] : File loading failed, Exititng.\n";
-                exit(EXIT_FAILURE);
+                file.close();
+                return false;
             }
         }
 
@@ -77,6 +82,7 @@ class Server_socket{
         }
 
         void transmit_file(){
+            file.open("datas/log.json", ios::in | ios::binary);
             std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
             cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
 
@@ -86,16 +92,28 @@ class Server_socket{
             cout<<"[LOG] : Transmitted Data Size "<<bytes_sent<<" Bytes.\n";
 
             cout<<"[LOG] : File Transfer Complete.\n";
+            file.close();
         }
+
+
         void receive_file(){
             char buffer[1024] = {};
             int valread = read(new_socket_descriptor , buffer, 1024);
             if(valread > 0){
+                file.open("datas/log.json", ios::out | ios::trunc | ios::binary);
+                if(file.is_open())cout<<"[LOG] : File Created.\n";
+                else{
+                    cout<<"[ERROR] : File creation failed\n";
+                }
                 cout<<"[LOG] : Data received "<<valread<<" bytes\n";
                 cout<<"[LOG] : Saving data to file.\n";
             
                 file<<buffer;
                 cout<<"[LOG] : File Saved.\n";
+                file.close();
+            }
+            else{
+             //   cout<<"[ERROR] : Empty file\n";
             }
 
         }
@@ -103,6 +121,8 @@ class Server_socket{
 
 int main(){
     Server_socket S;
-    while(true) S.receive_file();
+    while(true)    S.receive_file();
     return 0;
 }
+
+
