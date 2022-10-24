@@ -30,7 +30,7 @@ class Client_socket{
             address.sin_family = AF_INET;
             address.sin_port = htons( PORT );
             address_length = sizeof(address);
-            if(inet_pton(AF_INET, "127.0.0.1", &address.sin_addr)<=0) { 
+            if(inet_pton(AF_INET, "51.68.86.120", &address.sin_addr)<=0) { 
                 cout<<"[ERROR] : Invalid address\n";
             }
 
@@ -39,7 +39,7 @@ class Client_socket{
 
         }
         bool FileExist(){
-            file.open(".//Data//Client//log.json", ios::in | ios::binary);
+            file.open("serial/logs/log.json", ios::in | ios::binary);
             if(file.is_open()){
                 file.close();
                 return true;
@@ -83,7 +83,7 @@ class Client_socket{
             char buffer[1024] = {};
             int valread = read(general_socket_descriptor , buffer, 1024);
             if(valread > 0){
-                file.open(".//Data//Client//log.json", ios::out | ios::trunc | ios::binary);
+                file.open("serial/logs/log.json", ios::out | ios::trunc | ios::binary);
                 if(file.is_open())cout<<"[LOG] : File Created.\n";
                 else{
                     cout<<"[ERROR] : File creation failed, Exititng.\n";
@@ -102,7 +102,7 @@ class Client_socket{
 
         }
         void transmit_file(){
-            file.open(".//Data//Client//log.json", ios::in | ios::binary);
+            file.open("serial/logs/log.json", ios::in | ios::binary);
             std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
             cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
 
@@ -122,7 +122,7 @@ int main(){
     while(true){
         if(C.FileExist()){
             C.transmit_file();
-            if( remove( ".//Data//Client//log.json" ) != 0 )
+            if( remove( "serial/logs/log.json" ) != 0 )
                 perror( "[ERROR] : Error deleting file" );
             else
                 puts( "[LOG] : File successfully deleted" );
