@@ -412,11 +412,11 @@ int main(int argc, char *argv[]) {
         struct tm tm = *localtime(&t);
         FILE *fptr;
 
-        printf("{\ncapteur:{\nstr_date: \'%d/%02d/%02d %02d:%02d:%02d\',\n", tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
-        printf("sensor_id: \'BME280\',\n");
-        printf("temperature: %5.3f,\n", bmed.temp_c);
-        printf("humidity: %5.3f,\n", bmed.humi_p);
-        printf("pressure: %5.3f,\n", bmed.pres_p/100);
+        printf("\nDate: \'%d/%02d/%02d %02d:%02d:%02d\'\n", tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900, tm.tm_hour, tm.tm_min, tm.tm_sec);
+        printf("Identifiant du capteur: \'BME280\'\n");
+        printf("Temperature: %5.3f\n", bmed.temp_c);
+        printf("Humidity: %5.3f\n", bmed.humi_p);
+        printf("Pressure: %5.3f\n", bmed.pres_p/100);
 
         fptr = fopen("/home/pi/sensors-scripts/log_bme280.txt", "w");
         fprintf(fptr, "{\ncapteur:{\nstr_date: \'%d/%02d/%02d %02d:%02d:%02d\',\nsensor_id: \'BME280\',\ntemperature: %5.3f,\nhumidity: %5.3f,\npressure: %5.3f,\n",
