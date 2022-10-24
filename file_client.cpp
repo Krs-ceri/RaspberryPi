@@ -39,7 +39,7 @@ class Client_socket{
 
         }
         bool FileExist(){
-            file.open("serial/logs/log.json", ios::in | ios::binary);
+            file.open("../../serial/logs/log.json", ios::in | ios::binary);
             if(file.is_open()){
                 file.close();
                 return true;
@@ -83,7 +83,7 @@ class Client_socket{
             char buffer[1024] = {};
             int valread = read(general_socket_descriptor , buffer, 1024);
             if(valread > 0){
-                file.open("serial/logs/log.json", ios::out | ios::trunc | ios::binary);
+                file.open("../../serial/logs/log.json", ios::out | ios::trunc | ios::binary);
                 if(file.is_open())cout<<"[LOG] : File Created.\n";
                 else{
                     cout<<"[ERROR] : File creation failed, Exititng.\n";
@@ -102,9 +102,10 @@ class Client_socket{
 
         }
         void transmit_file(){
-            file.open("serial/logs/log.json", ios::in | ios::binary);
+            file.open("../../serial/logs/log.json", ios::in | ios::binary);
             std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-            cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
+            if(contents.length() > 0){
+                cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
 
             cout<<"[LOG] : Sending...\n";
 
@@ -113,6 +114,8 @@ class Client_socket{
             cout<<"[LOG] : Transmitted Data Size "<<bytes_sent<<" Bytes.\n";
 
             cout<<"[LOG] : File Transfer Complete.\n";
+            }
+            
             file.close();
         }
 };
@@ -122,7 +125,7 @@ int main(){
     while(true){
         if(C.FileExist()){
             C.transmit_file();
-            if( remove( "serial/logs/log.json" ) != 0 )
+            if( remove( "../../serial/logs/log.json" ) != 0 )
                 perror( "[ERROR] : Error deleting file" );
             else
                 puts( "[LOG] : File successfully deleted" );
