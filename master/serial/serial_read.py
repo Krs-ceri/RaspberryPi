@@ -53,7 +53,9 @@ s = "/home/pi/serial/logs/log.json"
 while 1:
     ########## red = gpio 26, yellow = 19, green = 13 => don't belive the sticker shown on camera ########
 
-    log_file = open(s, mode="w", encoding="utf-8")
+    log_file = open(s, mode="wb")# encoding="utf-8")
+    x=""
+    #time.sleep(30)
     for i in range(16):
         # By default, yellow led is on when program is active
         led_on(yellow)
@@ -77,19 +79,20 @@ while 1:
         #s = "/home/pi/serial/log_%s-%s-%s-%sh%sm%ss.txt" % e.day,
         #e = datetime.datetime.now()
         #s = ("/home/pi/serial/logs/log_%s-%s-%s-%sh%sm.json" % (e.day, e.month, e.year, e.hour, e.minute))
-        log_file = open(s, mode="a", encoding="utf-8")
-        #log_file = open("/home/pi/logs/log_gyro.txt","w")
+        log_file = open(s, mode="ab")#, encoding="utf-8")
+        #with open(s, encoding="utf-8", errors='ignore') as log_file:
+        # log_file = open("/home/pi/logs/log_gyro.txt","w")
 
         if x=="":
             print("rien")
         else:
             # Decode serial data from bytes strings into utf-8 unicode strings
-            x=x.decode('utf-8')
+            #x=x.decode('utf-8')
             # Writing data in log file
             log_file.write(x)
-
+        s0 = b'\n'
         # Closing log file
         log_file.close()
-        if x=="\n":
+        if x==s0: #"\n":
             led_on(yellow)
-            time.sleep(35)
+            time.sleep(30)
