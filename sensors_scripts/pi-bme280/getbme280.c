@@ -418,7 +418,7 @@ int main(int argc, char *argv[]) {
         printf("Humidity: %5.3f\n", bmed.humi_p);
         printf("Pressure: %5.3f\n", bmed.pres_p/100);
 
-        fptr = fopen("/home/pi/sensors-scripts/log_bme280.txt", "w");
+        fptr = fopen("/home/pi/sensors-scripts/log_bme280.txt", "wb");
         fprintf(fptr, "{\ncapteur:{\nstr_date: \'%d/%02d/%02d %02d:%02d:%02d\',\nsensor_id: \'BME280\',\ntemperature: %5.3f,\nhumidity: %5.3f,\npressure: %5.3f,\n",
                 tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900, tm.tm_hour, tm.tm_min, tm.tm_sec, bmed.temp_c,bmed.humi_p, bmed.pres_p/100);
         fclose(fptr);
