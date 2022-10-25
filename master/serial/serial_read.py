@@ -55,7 +55,19 @@ while 1:
 
     log_file = open(s, mode="wb")# encoding="utf-8")
     x=""
+
+    #port_open = 0
+    #if port_open == 0:
+    #    print("Ok port open")
+    #    port_open = 1
+    #else:
+    #    ser.open()
+    #ser.flushInput()
     #time.sleep(30)
+    #ser.flushInput()
+    #ser.flushOutput()
+    ser.reset_input_buffer()
+    ser.reset_output_buffer()
     for i in range(16):
         # By default, yellow led is on when program is active
         led_on(yellow)
@@ -95,4 +107,7 @@ while 1:
         log_file.close()
         if x==s0: #"\n":
             led_on(yellow)
-            time.sleep(30)
+            #ser.close()
+            #time.sleep(27)
+            #ser.reset_input_buffer()
+            #ser.reset_output_buffer()
