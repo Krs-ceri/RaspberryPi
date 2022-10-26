@@ -1,0 +1,19 @@
+1) wget https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
+
+2) tar -xvzf boost_1_80_0.tar.gz
+3) cd boost_1_80_0/
+4) ./bootstrap.sh
+5) sudo ./b2 install threading=multi link=shared
+
+Remarque : si une vesrion ultérieure de boost est installée, il faut commencer par la désintaller, pour vérifier :
+
+il suffit de compiler et exécuter le code ci-dessous :
+
+#include <iostream>
+#include <boost/version.hpp>
+
+int main() 
+{
+  std::cout <<"BOOST_LIB_VERSION : "<< BOOST_LIB_VERSION << std::endl;
+  return 0;
+}
