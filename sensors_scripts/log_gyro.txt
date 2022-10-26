@@ -1,0 +1,8 @@
+gyro_x: -0.015,
+gyro_y: -0.008,
+gyro_z: 0.000,
+accel_x: -0.000,
+accel_y: -0.000,
+accel_z: 0.004
+}
+}
