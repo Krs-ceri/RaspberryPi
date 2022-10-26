@@ -2,7 +2,7 @@
 
 namespace Manage
 {
-       string BoostTools::load_datas(int port, std::string ip_address, const std::string request)
+       string BoostTools::load_datas(int port, std::string ip_address, const std::string msg)
        {
                 boost::asio::io_service io_service;
                 tcp::socket socket(io_service);
@@ -10,7 +10,7 @@ namespace Manage
                 socket.connect( tcp::endpoint( boost::asio::ip::address::from_string(ip_address), port ) );
 
                 boost::system::error_code error;
-                boost::asio::write( socket, boost::asio::buffer(request), error );
+                boost::asio::write( socket, boost::asio::buffer(msg), error );
 
                 if( !error )
                 {
@@ -31,8 +31,8 @@ namespace Manage
                 }
                 else
                 {
-                  std::string response = boost::asio::buffer_cast<const char*>(receive_buffer.data());
-                  return response;
+                  std::string datas = boost::asio::buffer_cast<const char*>(receive_buffer.data());
+                  return datas;
                 }
        }
 }
