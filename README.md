@@ -13,3 +13,7 @@ file_server.cpp : receive data from tcp connection, and save it as "log.json" (c
 g++ -o serveur file_server.cpp
 ```
 
+## RPI Master/slave
+
+
+## Console 
