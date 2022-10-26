@@ -66,7 +66,7 @@ class Client_socket{
         }
 
         void blink_led() {
-           /* wiringPiSetupGpio();
+            wiringPiSetupGpio();
 
             pinMode(13, OUTPUT);
 
@@ -77,7 +77,7 @@ class Client_socket{
             digitalWrite(13, HIGH);
             delay(15);
             digitalWrite(13, LOW);
-            delay(15);*/
+            delay(15);
         }
         void receive_file(){
             char buffer[1024] = {};
