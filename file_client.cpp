@@ -7,6 +7,9 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+
+#include <wiringPi.h>
+
 using namespace std;
 
 class Client_socket{
@@ -27,7 +30,7 @@ class Client_socket{
             address.sin_family = AF_INET;
             address.sin_port = htons( PORT );
             address_length = sizeof(address);
-            if(inet_pton(AF_INET, "127.0.0.1", &address.sin_addr)<=0) { 
+            if(inet_pton(AF_INET, "51.68.86.120", &address.sin_addr)<=0) { 
                 cout<<"[ERROR] : Invalid address\n";
             }
 
@@ -35,7 +38,17 @@ class Client_socket{
             
 
         }
-
+        bool FileExist(){
+            file.open("../../serial/logs/log.json", ios::in | ios::binary);
+            if(file.is_open()){
+                file.close();
+                return true;
+            }
+            else{
+                file.close();
+                return false;
+            }
+        }
         void create_socket(){
             if ((general_socket_descriptor = socket(AF_INET, SOCK_STREAM, 0)) < 0) { 
                 perror("[ERROR] : Socket failed.\n");
@@ -52,11 +65,25 @@ class Client_socket{
             cout<<"[LOG] : Connection Successfull.\n";
         }
 
+        void blink_led() {
+           /* wiringPiSetupGpio();
+
+            pinMode(13, OUTPUT);
+
+            digitalWrite(13, HIGH);
+            delay(15);
+            digitalWrite(13, LOW);
+            delay(15);
+            digitalWrite(13, HIGH);
+            delay(15);
+            digitalWrite(13, LOW);
+            delay(15);*/
+        }
         void receive_file(){
             char buffer[1024] = {};
             int valread = read(general_socket_descriptor , buffer, 1024);
             if(valread > 0){
-                file.open(".//Data//Client//log.json", ios::out | ios::trunc | ios::binary);
+                file.open("../../serial/logs/log.json", ios::out | ios::trunc | ios::binary);
                 if(file.is_open())cout<<"[LOG] : File Created.\n";
                 else{
                     cout<<"[ERROR] : File creation failed, Exititng.\n";
@@ -67,13 +94,42 @@ class Client_socket{
             
                 file<<buffer;
                 cout<<"[LOG] : File Saved.\n";
+                file.close();
+            }
+            else{
+             //   cout<<"[ERROR] : Empty file\n";
             }
 
+        }
+        void transmit_file(){
+            file.open("../../serial/logs/log.json", ios::in | ios::binary);
+            std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+            if(contents.length() > 0){
+                cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
+
+            cout<<"[LOG] : Sending...\n";
+
+            blink_led();
+            int bytes_sent = send(general_socket_descriptor , contents.c_str() , contents.length() , 0 );
+            cout<<"[LOG] : Transmitted Data Size "<<bytes_sent<<" Bytes.\n";
+
+            cout<<"[LOG] : File Transfer Complete.\n";
+            }
+            
+            file.close();
         }
 };
 
 int main(){
     Client_socket C;
-    while(true)    C.receive_file();
+    while(true){
+        if(C.FileExist()){
+            C.transmit_file();
+            if( remove( "../../serial/logs/log.json" ) != 0 )
+                perror( "[ERROR] : Error deleting file" );
+            else
+                puts( "[LOG] : File successfully deleted" );
+        }
+    }
     return 0;
 }

@@ -19,6 +19,7 @@ class Server_socket{
 
     struct sockaddr_in address;
     int address_length;
+    
 
     public:
         Server_socket(){
@@ -37,7 +38,7 @@ class Server_socket{
 
         }
         bool FileExist(){
-            file.open(".//Data//Server//log.json", ios::in | ios::binary);
+            file.open("datas/log.json", ios::in | ios::binary);
             if(file.is_open()){
                 file.close();
                 return true;
@@ -81,7 +82,7 @@ class Server_socket{
         }
 
         void transmit_file(){
-            file.open(".//Data//Server//log.json", ios::in | ios::binary);
+            file.open("datas/log.json", ios::in | ios::binary);
             std::string contents((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
             cout<<"[LOG] : Transmission Data Size "<<contents.length()<<" Bytes.\n";
 
@@ -93,18 +94,38 @@ class Server_socket{
             cout<<"[LOG] : File Transfer Complete.\n";
             file.close();
         }
+
+
+        void receive_file(){
+            char buffer[1024] = {};
+            int valread = read(new_socket_descriptor , buffer, 1024);
+            if(valread > 0){
+                file.open("datas/log.json", ios::out | ios::trunc | ios::binary);
+                if(file.is_open()){
+                    cout<<"[LOG] : File Created.\n";
+                    cout<<"[LOG] : Data received "<<valread<<" bytes\n";
+                    cout<<"[LOG] : Saving data to file.\n";
+            
+                    file<<buffer;
+                    cout<<"[LOG] : File Saved.\n";
+                    file.close();
+                }
+                else{
+                    cout<<"[ERROR] : File creation failed\n";
+                }
+
+            }
+            else{
+             //   cout<<"[ERROR] : Empty file\n";
+            }
+
+        }
 };
 
 int main(){
     Server_socket S;
-    while(true){
-        if(S.FileExist()){
-            S.transmit_file();
-            if( remove( ".//Data//Server//log.json" ) != 0 )
-                perror( "[ERROR] : Error deleting file" );
-            else
-                puts( "[LOG] : File successfully deleted" );
-        }
-    }
+    while(true)    S.receive_file();
     return 0;
 }
+
+
